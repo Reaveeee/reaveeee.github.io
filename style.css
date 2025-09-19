@@ -1,0 +1,29 @@
+table {
+    box-shadow: 0px 0px 10px black;
+    border: 0px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+table,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.board {
+    margin-top: 10%;
+    margin-left: 40%;
+}
+
+.select {
+    background-color: black;
+}
+
+.blank {
+    background-color: white;
+}
+
+.blocked {
+    background-color: red;
+}
