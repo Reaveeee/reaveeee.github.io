@@ -2,15 +2,22 @@ board = document.getElementById("board")
 
 function generateTable() {
     var tableString = "<br><table class='table'>"
-    var solution = [[], [], [], [], []]
+    var solution = []
+    gridSize = document.getElementById("size").valueAsNumber
+    if(gridSize < 2) gridSize = 2
+    if(gridSize > 10) gridSize = 10
 
-    for (row = -1; row < 5; row++) {
+    for(i = 0; i < gridSize; i++){
+        solution[i] = [];
+    }
+
+    for (row = -1; row < gridSize; row++) {
         tableString += "<tr height='50px'>"
-        for (cell = -1; cell < 5; cell++) {
+        for (cell = -1; cell < gridSize; cell++) {
             if (row >= 0 && cell >= 0) {
                 solution[row][cell] = Math.round(Math.random())
                 let id = row.toString() + cell.toString()
-                tableString += "<td width='50px' id='cell" + row + cell + "' onClick='handleClick(" + id + ")' class='blank'>" + " " + "</td>"
+                tableString += "<td width='50px' id='cell" + id + "' onClick='handleLeftClick(" + id + ")' class='blank'>" + " " + "</td>"
             }
             else if (cell < 0 && row >= 0) {
                 tableString += "<td width='50px' id='vinst" + row + "'>" + "#" + "</td>"
@@ -27,32 +34,55 @@ function generateTable() {
     tableString += "</table>"
     board.innerHTML = tableString
 
-    for (i = 0; i < 5; i++) {
+    for(row = 0; row < gridSize; row++){
+        for (cell = 0; cell < gridSize; cell++){
+            setupRightClickEvent(row.toString() + cell.toString())
+        }
+    }
+
+    for (i = 0; i < gridSize; i++) {
         instructionObj = document.getElementById("vinst" + i)
         instructionObj.innerHTML = createVerticalInstruction(i, solution)
     }
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < gridSize; i++) {
         instructionObj = document.getElementById("hinst" + i)
         instructionObj.innerHTML = createHorizontalInstruction(i, solution)
     }
 }
 
-function handleClick(cellID) {
+function handleLeftClick(cellID) {
     var cellObj = document.getElementById("cell" + cellID.toString().padStart(2, '0'))
 
-    setCellClass(cellObj)
+    if(cellObj.className == "select"){
+        cellObj.className = "blank"
+    }
+    else cellObj.className = "select"
 
-    if (checkCompletion()) alert("Fertig")
+    if (checkCompletion()) endGame()
+}
+
+function handleRightClick(cellID){
+     var cellObj = document.getElementById("cell" + cellID.toString().padStart(2, '0'))
+
+    if(cellObj.className == "blocked"){
+        cellObj.className = "blank"
+    }
+    else cellObj.className = "blocked"
+
+    if (checkCompletion()) endGame()
 }
 
 function checkCompletion() {
-    var guesses = [[], [], [], [], []]
+    var guesses = []
+    for(i = 0; i < gridSize; i++){
+        guesses[i] = [];
+    }
     var correctRows = 0;
     var instructionObj
     var cellObj
 
-    for (row = 0; row < 5; row++) {
-        for (cell = 0; cell < 5; cell++) {
+    for (row = 0; row < gridSize; row++) {
+        for (cell = 0; cell < gridSize; cell++) {
             cellObj = document.getElementById("cell" + row + cell)
             if (cellObj.className == "select") {
                 guesses[row][cell] = 1;
@@ -63,36 +93,23 @@ function checkCompletion() {
         }
     }
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < gridSize; i++) {
         instructionObj = document.getElementById("vinst" + i)
         if (instructionObj.innerHTML == createVerticalInstruction(i, guesses)) correctRows++
     }
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < gridSize; i++) {
         instructionObj = document.getElementById("hinst" + i)
         if (instructionObj.innerHTML == createHorizontalInstruction(i, guesses)) correctRows++
     }
-    return correctRows == 10
+    return correctRows == gridSize*2
 }
 
-function setCellClass(cellObj) {
-    switch(cellObj.className)
-    {
-        case "blank":
-            cellObj.className = "select"
-            break
-        case "select":
-            cellObj.className = "blocked"
-            break
-        case "blocked":
-            cellObj.className = "blank"
-    }
-}
 
 function createVerticalInstruction(instructionIndex, selections) {
     var numbers = selections[instructionIndex]
     var instruction = ""
-    for (k = 0; k < 5; k++) {
+    for (k = 0; k < gridSize; k++) {
         instruction += numbers[k]
     }
     instruction = instruction.split("0")
@@ -113,10 +130,10 @@ function createVerticalInstruction(instructionIndex, selections) {
 function createHorizontalInstruction(instructionIndex, selections) {
     var numbers = []
     var instruction = ""
-    for (k = 0; k < 5; k++) {
+    for (k = 0; k < gridSize; k++) {
         numbers[k] = (selections[k][instructionIndex])
     }
-    for (k = 0; k < 5; k++) {
+    for (k = 0; k < gridSize; k++) {
         instruction += numbers[k]
     }
     instruction = instruction.split("0")
@@ -132,4 +149,16 @@ function createHorizontalInstruction(instructionIndex, selections) {
         }
     }
     return instruction2
+}
+
+function endGame(){
+    alert("Finished")
+}
+
+function setupRightClickEvent(cellID){
+    document.getElementById("cell" + cellID.toString().padStart(2, '0')).addEventListener("contextmenu", function(event) {
+    event.preventDefault();
+    handleRightClick(cellID)
+});
+
 }
