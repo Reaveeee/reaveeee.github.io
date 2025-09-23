@@ -8,10 +8,28 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-    <div>
-        <input id="start" type="button" value="Start" onclick="generateTable()">
-        <input id="size" type="number" min="2" max="10" placeholder="Size">
+    <div class="options">
+        <!--Start Button-->
+        <input id="start" type="button" value="Start" onclick="generateTable()"> <br>
+
+        <!--Grid Size Selection-->
+        <input id="size" type="number" min="2" max="10" placeholder="Size" value="5"> <br>
+
+        <!--Block Mode Radio-->
+        <fieldset class="radio">
+            <legend>Select how to block cells</legend>
+            <input id="iRight" type="radio" name="blockModeRadio" checked="true" onclick="handleBlockModeClick(0)">
+            <label for="blockMode1">Right Click</label> <br>
+
+            <input id="iDouble" type="radio" name="blockModeRadio" onclick="handleBlockModeClick(1)">
+            <label for="blockMode1">Double Click</label> <br>
+        </fieldset>
+        
+        <!--Timer-->
+        <p id="timer">0</p>
+
     </div>
+
     <div id="board" class="board">
         <!--Nonogram Table is here-->
     </div>

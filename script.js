@@ -1,9 +1,17 @@
 board = document.getElementById("board")
+gameRunning = false;
+var time = 0;
+var gridSize = 5
+var blockMode = 0
 
 function generateTable() {
     var tableString = "<br><table class='table'>"
     var solution = []
     gridSize = document.getElementById("size").valueAsNumber
+    gameRunning = true;
+    selectedBlockMode = blockMode
+    time = 0
+
     if(gridSize < 2) gridSize = 2
     if(gridSize > 10) gridSize = 10
 
@@ -51,18 +59,36 @@ function generateTable() {
 }
 
 function handleLeftClick(cellID) {
+    if(!gameRunning) return
     var cellObj = document.getElementById("cell" + cellID.toString().padStart(2, '0'))
+    var className = cellObj.className
 
-    if(cellObj.className == "select"){
-        cellObj.className = "blank"
+    if(selectedBlockMode == 0){
+        if(className == "select"){
+            cellObj.className = "blank"
+        }
+        else cellObj.className = "select"
     }
-    else cellObj.className = "select"
+    else{
+        switch(className){
+            case "blank":
+                cellObj.className = "select"
+                break
+            case "select":
+                cellObj.className = "blocked"
+                break
+            default:
+                cellObj.className = "blank"
+        }
+    }
 
     if (checkCompletion()) endGame()
 }
 
 function handleRightClick(cellID){
-     var cellObj = document.getElementById("cell" + cellID.toString().padStart(2, '0'))
+    if(!gameRunning) return
+    if(selectedBlockMode == 1) return
+    var cellObj = document.getElementById("cell" + cellID.toString().padStart(2, '0'))
 
     if(cellObj.className == "blocked"){
         cellObj.className = "blank"
@@ -152,13 +178,27 @@ function createHorizontalInstruction(instructionIndex, selections) {
 }
 
 function endGame(){
-    alert("Finished")
+    gameRunning = false;
 }
 
 function setupRightClickEvent(cellID){
     document.getElementById("cell" + cellID.toString().padStart(2, '0')).addEventListener("contextmenu", function(event) {
     event.preventDefault();
-    handleRightClick(cellID)
-});
+    handleRightClick(cellID);
+});}
 
+
+function handleBlockModeClick(mode){
+    blockMode = mode;
 }
+
+function updateTimer(){
+    if(!gameRunning) return
+    time++
+
+    let seconds = time / 100
+
+    document.getElementById("timer").innerHTML = seconds
+}
+
+setInterval(updateTimer, 10);
