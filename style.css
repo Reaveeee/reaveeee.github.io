@@ -1,10 +1,10 @@
-table {
+.table {
     margin: auto;
     margin-top: 1%;
     text-align: center;
     font-family: sans-serif;
     box-shadow: 0px 0px 10px black;
-
+    
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -14,8 +14,9 @@ table {
 
 table,
 td {
-    border: 1px solid black;
+    
     border-collapse: collapse;
+    border: 1px, solid, black
 }
 
 td{
@@ -40,6 +41,7 @@ td{
     font-family: sans-serif;
     border: 1px solid black;
     box-shadow: 0px 0px 10px black;
+    border-radius: 10px;
 
     width: 400px;
     margin: auto;
@@ -47,9 +49,41 @@ td{
     padding-top: 10px;
 }
 
+
+.startButton{
+    border-radius: 5px;
+    background-color: white;
+    margin-bottom: 10px;
+    border-width: 0px;
+    box-shadow: 0px 0px 5px black;
+}
+
+.sizeSelection{
+    border-radius: 5px;
+    background-color: white;
+    margin-bottom: 10px;
+    border-width: 0px;
+    box-shadow: 0px 0px 5px black;
+    padding-left: 5px;
+}
+
 .radio{
     text-align: left;
 
     margin-left: 10%;
     margin-right: 10%;
+}
+
+.radioOption{
+    accent-color: black;
+}
+
+fieldset{
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px black;
+    border-width: 0px;
+}
+
+legend{
+    background-color: white;
 }
