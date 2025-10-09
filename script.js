@@ -34,7 +34,7 @@ function generateTable() {
                 tableString += "<td width='50px' id='hinst" + cell + "'>" + "#" + "</td>"
             }
             else {
-                tableString += "<td width='50px'>" + " " + "</td>"
+                tableString += "<td width='50px' class='top-left'>" + " " + "</td>"
             }
         }
         tableString += "</tr>"

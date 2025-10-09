@@ -1,10 +1,24 @@
+:root {
+  --background-color: rgb(60, 70, 123);
+  --level1-color: rgb(80, 88, 156);
+  --level2-color: rgb(99, 108, 203);
+  --level3-color: rgb(110, 140, 251);
+}
+
+body{
+    background-color: var(--background-color);
+}
+
 .table {
     margin: auto;
     margin-top: 1%;
     text-align: center;
     font-family: sans-serif;
-    box-shadow: 0px 0px 10px black;
-    border: 1px, solid, black;
+    box-shadow: 0px 0px 20px var(--level1-color);
+    background-color: var(--level1-color);
+    border-style: hidden;
+    border-radius: 10px;
+    overflow: hidden;
     
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -15,9 +29,8 @@
 
 table,
 td {
-    
+    border: solid 1px var(--level2-color);
     border-collapse: collapse;
-    border: 1px, solid, black
 }
 
 td{
@@ -26,26 +39,31 @@ td{
 }
 
 .select {
-    background-color: black;
+    background-color: var(--level2-color);
+    box-shadow: 0px 0px 10px var(--level2-color);
 }
 
 .blank {
-    background-color: white;
+    background-color: var(--level1-color);
+    box-shadow: 0px 0px 10px var(--level1-color);
 }
 
 .blocked {
-    background-color: red;
+    background-color: var(--background-color);
+    box-shadow: 0px 0px 10px var(--background-color);
 }
 
 .options {
     text-align: center;
     font-family: sans-serif;
-    border: 1px solid black;
-    box-shadow: 0px 0px 10px black;
+    border: 1px solid var(--level1-color);
+    background-color: var(--level1-color);
+    box-shadow: 0px 0px 20px var(--level1-color);
     border-radius: 10px;
 
     width: 400px;
     margin: auto;
+    margin-top: 30px;
 
     padding-top: 10px;
 }
@@ -53,37 +71,46 @@ td{
 
 .startButton{
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--background-color);
     margin-bottom: 10px;
     border-width: 0px;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px var(--background-color)
 }
 
 .sizeSelection{
     border-radius: 5px;
     margin-bottom: 10px;
     border-width: 0px;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px var(--background-color);
+    background-color: var(--background-color);
     padding-left: 5px;
 }
 
 .radio{
     text-align: left;
+    background-color: var(--background-color);
+    box-shadow: 0px 0px 5px var(--background-color);
 
     margin-left: 10%;
     margin-right: 10%;
 }
 
 .radioOption{
-    accent-color: black;
+    accent-color: var(--background-color);
 }
 
 fieldset{
     border-radius: 10px;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px var(--level2-color);
     border-width: 0px;
 }
 
 legend{
-    background-color: white;
+    background-color: var(--background-color);
+    color: black;
 }
+
+label{
+    color: black;
+}
+
